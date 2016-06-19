@@ -15,6 +15,7 @@ class EloquentLatestOrdersRepository implements LatestOrdersRepository
     public function latest(int $amount) : array
     {
         return OrderModel::orderBy('date', 'desc')
+            ->with('lines')
             ->limit($amount)
             ->get()
             ->map(function (OrderModel $orderModel) {

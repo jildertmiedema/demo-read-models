@@ -1,5 +1,7 @@
 <?php
 
+use App\BusinessLogic\Catalog\Product;
+use App\BusinessLogic\Customers\Customer;
 use App\BusinessLogic\Orders\Order;
 use App\BusinessLogic\Orders\OrderLine;
 use Illuminate\Database\Seeder;
@@ -13,11 +15,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(Order::class, 30)
-            ->create()
-            ->each(function (Order $order) {
-                $lines = factory(OrderLine::class, rand(1, 10))->make();
-                $order->lines()->saveMany($lines);
-            });
+        //        factory(Order::class, 30)
+//            ->create()
+//            ->each(function (Order $order) {
+//                $lines = factory(OrderLine::class, rand(1, 10))->make();
+//                $order->lines()->saveMany($lines);
+//            });
+
+        factory(Customer::class, 30)->create();
+        factory(Product::class, 30)->create();
     }
 }

@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use App\BusinessLogic\Orders\EloquentOrderRepository;
 use App\BusinessLogic\Orders\OrderRepository;
+use App\BusinessLogic\Search\EloquentSearchRepository;
+use App\BusinessLogic\Search\FulltextSearchRepository;
+use App\BusinessLogic\Search\SearchRepository;
 use App\Widgets\LatestOrders\EloquentLatestOrdersRepository;
 use App\Widgets\LatestOrders\LatestOrdersRepository;
 use App\Widgets\LatestOrders\RedisLatestOrdersRepository;
@@ -37,5 +40,7 @@ class AppServiceProvider extends ServiceProvider
 
             return new RedisLatestOrdersRepository(new EloquentLatestOrdersRepository(), $redis);
         });
+//        $this->app->bind(SearchRepository::class, EloquentSearchRepository::class);
+        $this->app->bind(SearchRepository::class, FulltextSearchRepository::class);
     }
 }

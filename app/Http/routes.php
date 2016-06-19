@@ -16,3 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', 'DashboardController@dashboard');
+Route::get('search', 'SearchController@search');
+
+Route::get('customer/{id}', [
+    'as' => 'customer.view',
+    'uses' => 'DashboardController@dashboard',
+]);
