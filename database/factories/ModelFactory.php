@@ -11,65 +11,12 @@
 |
 */
 
+use App\BusinessLogic\Sales\Account;
+use App\BusinessLogic\Sales\Appointment;
+use App\BusinessLogic\Sales\Project;
 use Carbon\Carbon;
 
-class ProductFaker extends \Faker\Provider\Base
-{
-    protected static $productFormats = [
-        '{{material}} {{product}}',
-        '{{color}} {{material}} {{product}}',
-    ];
-
-    protected static $material = [
-        'iron',
-        'metal',
-        'wooden',
-        'leather',
-        'rock',
-        'cotton',
-        'plastic',
-    ];
-
-    protected static $color = [
-        'blue',
-        'green',
-        'red',
-        'brown',
-        'yellow',
-    ];
-
-    protected static $product = [
-        'shoe',
-        'train',
-        'car',
-        'dog',
-        'cat',
-    ];
-
-    public function material()
-    {
-        return static::randomElement(static::$material);
-    }
-
-    public function color()
-    {
-        return static::randomElement(static::$color);
-    }
-
-    public function product()
-    {
-        return static::randomElement(static::$product);
-    }
-
-    public function title()
-    {
-        $format = static::randomElement(static::$productFormats);
-
-        return $this->generator->parse($format);
-    }
-}
-//dd($factory);
-$factory->faker->addProvider(new ProductFaker($factory->faker));
+$factory->faker->addProvider(new App\Fakers\ProductFaker($factory->faker));
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
@@ -105,10 +52,36 @@ $factory->define(App\BusinessLogic\Customers\Customer::class, function (Faker\Ge
         'street_address' => $faker->streetAddress,
     ];
 });
+
 $factory->define(App\BusinessLogic\Catalog\Product::class, function (Faker\Generator $faker) {
     return [
-        'name' => ucfirst($faker->title),
+        'name' => ucfirst($faker->productName),
         'description' => implode(" ", $faker->paragraphs),
         'price' => rand(1, 1000) / 100.0,
+    ];
+});
+
+$factory->define(Project::class, function (Faker\Generator $faker) {
+    return [
+        'name' => ucfirst($faker->productName),
+        'user_id' => 1,
+    ];
+});
+
+$factory->define(Account::class, function (Faker\Generator $faker) {
+    return [
+        'name' => ucfirst($faker->company),
+        'website' => 'http://' . $faker->domainName,
+        'phone' => $faker->phoneNumber
+    ];
+});
+
+$factory->define(Appointment::class, function (Faker\Generator $faker) {
+    $time = (rand(1, 5) == 2) ? null : (rand(8, 18) . ':' . rand(0, 3) * 15);
+
+    return [
+        'time' => $time,
+        'date' => Carbon::now()->addDays($faker->randomElement([-1, 0, 0, 0, 1, 2])),
+        'done' => $faker->randomElement([true, false, false, false, false])
     ];
 });

@@ -11,12 +11,21 @@
 |
 */
 
+
+use App\User;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('dashboard', 'DashboardController@dashboard');
 Route::get('search', 'SearchController@search');
+Route::get('sales', 'ListController@todoList');
+Route::get('login', function () {
+    \Auth::login(User::first());
+
+    return redirect('/sales');
+});
 
 Route::get('customer/{id}', [
     'as' => 'customer.view',
