@@ -16,8 +16,6 @@ class CreateSalesAppointmentsTable extends Migration
             $table->increments('id');
             $table->integer('activity_id')->unsigned()->index();
             $table->foreign('activity_id')->references('id')->on('sales_activities')->onDelete('cascade');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->time('time')->nullable();
             $table->date('date');
             $table->boolean('done')->default(false);

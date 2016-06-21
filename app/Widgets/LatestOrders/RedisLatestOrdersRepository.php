@@ -46,6 +46,7 @@ class RedisLatestOrdersRepository implements LatestOrdersRepository
 
         $value = $this->latestOrdersRepository->latest($amount);
         $this->redis->set($key, json_encode($value));
+        $this->redis->expire($key, 20);
 
         return $value;
     }

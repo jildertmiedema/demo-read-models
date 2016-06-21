@@ -20,7 +20,7 @@ $factory->faker->addProvider(new App\Fakers\ProductFaker($factory->faker));
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->company,
         'email' => $faker->safeEmail,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
@@ -38,7 +38,7 @@ $factory->define(App\BusinessLogic\Orders\Order::class, function (Faker\Generato
 
 $factory->define(App\BusinessLogic\Orders\OrderLine::class, function (Faker\Generator $faker) {
     return [
-        'description' => $faker->opera,
+        'description' => $faker->productName,
         'piece_price' => rand(1, 1000) / 100.0,
         'amount' => rand(1, 10),
     ];
@@ -81,7 +81,7 @@ $factory->define(Appointment::class, function (Faker\Generator $faker) {
 
     return [
         'time' => $time,
-        'date' => Carbon::now()->addDays($faker->randomElement([-1, 0, 0, 0, 1, 2])),
+        'date' => Carbon::now()->addDays($faker->randomElement([-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2])),
         'done' => $faker->randomElement([true, false, false, false, false])
     ];
 });

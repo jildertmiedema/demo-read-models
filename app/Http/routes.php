@@ -11,7 +11,6 @@
 |
 */
 
-
 use App\User;
 
 Route::get('/', function () {
@@ -19,8 +18,15 @@ Route::get('/', function () {
 });
 
 Route::get('dashboard', 'DashboardController@dashboard');
+Route::get('dashboard/read', 'DashboardController@dashboardRead');
+Route::get('dashboard/redis', 'DashboardController@dashboardRedis');
 Route::get('search', 'SearchController@search');
+Route::get('search/fulltext', 'SearchController@searchFulltext');
 Route::get('sales', 'ListController@todoList');
+Route::get('sales-improved', 'ListController@todoListImproved');
+Route::get('sales-improved/view', 'ListController@todoListImprovedView');
+Route::get('sales-improved/memory', 'ListController@todoListImprovedMemory');
+
 Route::get('login', function () {
     \Auth::login(User::first());
 
@@ -29,5 +35,20 @@ Route::get('login', function () {
 
 Route::get('customer/{id}', [
     'as' => 'customer.view',
-    'uses' => 'DashboardController@dashboard',
+    'uses' => 'HomeController@demo',
+]);
+
+Route::get('product/{id}', [
+    'as' => 'product.view',
+    'uses' => 'HomeController@demo',
+]);
+
+Route::get('project/{id}', [
+    'as' => 'project.view',
+    'uses' => 'HomeController@demo',
+]);
+
+Route::get('user/{id}', [
+    'as' => 'user.view',
+    'uses' => 'HomeController@demo',
 ]);

@@ -24,4 +24,12 @@ class SearchController extends Controller
 
         return view('search.results', compact('results', 'term'));
     }
+
+    public function searchFulltext(Request $request)
+    {
+        $term = $request->input('q', '');
+        $results = app('search.full-text')->search($term);
+
+        return view('search.results', compact('results', 'term'));
+    }
 }

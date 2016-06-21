@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\CreateSearchItems::class
+        Commands\CreateSearchItems::class,
+        Commands\TodoListGenerate::class,
     ];
 
     /**

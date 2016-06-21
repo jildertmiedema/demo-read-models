@@ -35,12 +35,12 @@ class DatabaseSeeder extends Seeder
         factory(Order::class, 30)
             ->create()
             ->each(function (Order $order) {
-                $lines = factory(OrderLine::class, rand(1, 10))->make();
+                $lines = factory(OrderLine::class, rand(2, 10))->make();
                 $order->lines()->saveMany($lines);
             });
 
-        factory(Customer::class, 30)->create();
-        factory(Product::class, 30)->create();
+        factory(Customer::class, 100)->create();
+        factory(Product::class, 100)->create();
         $projects = [];
         $statesIds = collect(['Contact', 'Prospect', 'Offer', 'Last minute', 'Completed'])
             ->map(function ($name) {
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             });
 
-        factory(Account::class, 200)->create()
+        factory(Account::class, 400)->create()
             ->each(function (Account $account) use ($faker, $projects, $statesIds) {
                 $project = $faker->randomElement($projects);
                 $activity = Activity::create([
@@ -68,7 +68,6 @@ class DatabaseSeeder extends Seeder
                 ]);
                 factory(Appointment::class)->create([
                     'activity_id' => $activity->id,
-                    'user_id' => $project->user_id,
                 ]);
             });
     }

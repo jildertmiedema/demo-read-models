@@ -3,10 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\BusinessLogic\Sales\Activity;
+use App\Widgets\SalesTodoList\TodoItem;
+use App\Widgets\SalesTodoList\TodoListRepository;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
 
 class ListController extends Controller
 {
+    const ITEMS_PER_PAGE = 25;
+
     public function todoList()
     {
         $data = Activity::query();
@@ -47,8 +52,31 @@ class ListController extends Controller
             $q->whereRaw('DATE(date) <= "' . $beginDate->format('Y-m-d') . '"');
         });
 
-        $items = $data->paginate(25);
+        $items = $data->paginate(self::ITEMS_PER_PAGE);
         
         return view('sales.todo', compact('items'));
+    }
+
+    public function todoListImproved(TodoListRepository $todos)
+    {
+        $items = $todos->getPaginatedForUser(\Auth::user()->id, static::ITEMS_PER_PAGE);
+
+        return view('sales.todo-improved', compact('items'));
+    }
+
+    public function todoListImprovedView()
+    {
+        $todos = app('widget-todo.repo.view');
+        $items = $todos->getPaginatedForUser(\Auth::user()->id, static::ITEMS_PER_PAGE);
+
+        return view('sales.todo-improved', compact('items'));
+    }
+
+    public function todoListImprovedMemory()
+    {
+        $todos = app('widget-todo.repo.in-memory');
+        $items = $todos->getPaginatedForUser(\Auth::user()->id, static::ITEMS_PER_PAGE);
+
+        return view('sales.todo-improved', compact('items'));
     }
 }

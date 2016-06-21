@@ -63,19 +63,19 @@
                         <tbody>
                         @foreach($orders as $order)
                             <tr>
-                                <td>{{ $order->customer_name }}</td>
-                                <td>{{ $order->date->format('d-m-Y') }}</td>
-                                <td class="text-right">{{ money($order->total()) }}</td>
+                                <td>{{ $order->customerName }}</td>
+                                <td>{{ $order->date }}</td>
+                                <td class="text-right">{{ money($order->total) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+
             <div class="col-sm-6">
 
             </div>
-
             <h2 class="sub-header">Section title</h2>
             <div class="table-responsive">
                 <table class="table table-striped">

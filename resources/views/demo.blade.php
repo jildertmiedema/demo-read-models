@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        demo
+        <h1>It's just a demo</h1>
     </div>
 
 @endsection

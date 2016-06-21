@@ -27,6 +27,11 @@ function time_class($item)
     return '<span class="label label-' . $class . '">&nbsp;</span>';
 }
 
+function label_span($class)
+{
+    return '<span class="label label-' . $class . '">&nbsp;</span>';
+}
+
 function diffToClass($diff)
 {
     if ($diff > 30) {

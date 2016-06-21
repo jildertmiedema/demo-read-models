@@ -28,8 +28,21 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $orders = $this->orders->latest(5);
-        $latestOrders = $this->latestOrders->latest(5);
 
-        return view('dashboard', compact('orders', 'latestOrders'));
+        return view('dashboard', compact('orders'));
+    }
+
+    public function dashboardRead()
+    {
+        $orders = $this->latestOrders->latest(5);
+
+        return view('dashboard-read', compact('orders'));
+    }
+
+    public function dashboardRedis()
+    {
+        $orders = app('widgets.latest-orders.redis')->latest(5);
+
+        return view('dashboard-read', compact('orders'));
     }
 }
