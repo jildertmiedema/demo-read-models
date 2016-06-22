@@ -20,26 +20,6 @@ class InMemoryTodoListRepository implements TodoListRepository
             ->where('user_id', $userId)
             ->paginate($itemsPerPage);
 
-        $items = collect($paginatedItems->items())
-            ->map(function ($item) {
-                $todoItem = new TodoItem();
-
-                $todoItem->activityId = $item->id;
-                $todoItem->accountName = $item->account_name;
-                $todoItem->accountPhone = $item->account_phone;
-                $todoItem->accountWebsite = $item->account_website;
-                $todoItem->projectName = $item->project_name;
-                $todoItem->appointmentDate = $item->appointment_date;
-                $todoItem->appointmentTime  = $item->appointment_time;
-                $todoItem->status = $item->state;
-
-                return $todoItem;
-            });
-
-
-        return new LengthAwarePaginator($items, $paginatedItems->total(), $paginatedItems->perPage(), $paginatedItems->currentPage(), [
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => 'page',
-        ]);
+        return mapPaginator($paginatedItems, mapTo(TodoItem::class));
     }
 }

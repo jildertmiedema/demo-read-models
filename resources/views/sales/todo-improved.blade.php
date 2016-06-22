@@ -34,7 +34,7 @@
                             <td>{{ $result->projectName }}</td>
                             <td>{{ $result->appointmentDate }}</td>
                             <td>{{ $result->appointmentTime }}</td>
-                            <td>{{ $result->status }}</td>
+                            <td>{{ $result->state }}</td>
                         </tr>
                     @endforeach
                 </tbody>

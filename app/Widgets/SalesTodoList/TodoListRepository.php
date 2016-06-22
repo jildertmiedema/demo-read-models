@@ -2,13 +2,15 @@
 
 namespace App\Widgets\SalesTodoList;
 
+use Illuminate\Contracts\Pagination\Paginator;
+
 interface TodoListRepository
 {
     /**
      * @param int $userId
      * @param int $itemsPerPage
      *
-     * @return \Illuminate\Contracts\Pagination\Paginator
+     * @return Paginator
      */
-    public function getPaginatedForUser(int $userId, int $itemsPerPage) : \Illuminate\Contracts\Pagination\Paginator;
+    public function getPaginatedForUser(int $userId, int $itemsPerPage) : Paginator;
 }

@@ -57,26 +57,20 @@ class BuilderTodoListRepository implements TodoListRepository
 
         $paginatedItems = $data->paginate($itemsPerPage);
 
-        $items = collect($paginatedItems->items())
-            ->map(function (Activity $activity) {
-                $todoItem = new TodoItem();
+        return mapPaginator($paginatedItems, function (Activity $activity) {
+            $todoItem = new TodoItem();
 
-                $todoItem->activityId = $activity->id;
-                $todoItem->accountName = $activity->account->name;
-                $todoItem->accountPhone = $activity->account->phone;
-                $todoItem->accountWebsite = $activity->account->website;
-                $todoItem->projectName = $activity->project->name;
-                $todoItem->appointmentDate = $activity->firstOpenAppointment->date->format('Y-m-d');
-                $todoItem->appointmentTime  = $activity->firstOpenAppointment->time;
-                $todoItem->status = $activity->status->name;
-                $todoItem->class = null;
+            $todoItem->activityId = $activity->id;
+            $todoItem->accountName = $activity->account->name;
+            $todoItem->accountPhone = $activity->account->phone;
+            $todoItem->accountWebsite = $activity->account->website;
+            $todoItem->projectName = $activity->project->name;
+            $todoItem->appointmentDate = $activity->firstOpenAppointment->date->format('Y-m-d');
+            $todoItem->appointmentTime  = $activity->firstOpenAppointment->time;
+            $todoItem->state = $activity->status->name;
+            $todoItem->class = null;
 
-                return $todoItem;
-            });
-
-        return new LengthAwarePaginator($items, $paginatedItems->total(), $paginatedItems->perPage(), $paginatedItems->currentPage(), [
-            'path' => Paginator::resolveCurrentPath(),
-            'pageName' => 'page',
-        ]);
+            return $todoItem;
+        });
     }
 }

@@ -11,6 +11,6 @@ class TodoItem
     public $appointmentDate;
     public $projectName;
     public $appointmentTime;
-    public $status;
+    public $state;
     public $class;
 }

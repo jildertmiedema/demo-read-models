@@ -15,7 +15,8 @@
 
         @foreach($results as $result)
             <article>
-                {!! $result->short !!} <abbr>{{$result->relevance}}</abbr>
+                {!! $result->short !!}
+                <abbr>{{$result->relevance}}</abbr>
             </article>
         @endforeach
     </div>

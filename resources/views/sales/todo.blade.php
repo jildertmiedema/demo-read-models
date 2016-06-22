@@ -24,7 +24,11 @@
                     @foreach($items as $result)
                         <tr class="{{ row_class($result) }}">
                             <td>{!! time_class($result) !!}</td>
-                            <td><a href="/link">{{ $result->account->name }}</a> </td>
+                            <td>
+                                <a href="{{route('account.view', $result->account->id}}">
+                                    {{ $result->account->name }}
+                                </a>
+                            </td>
                             <td>{{ $result->account->phone }}</td>
                             <td>
                                 <a href="{{ $result->account->website }}" target="_blank">

@@ -42,10 +42,10 @@ class CreateSearchItems extends Command
      */
     public function handle()
     {
-        SearchItem::all()->map(function ($item) {
+        SearchItem::all()->each(function ($item) {
             $item->delete();
         });
-        Customer::all()->map(function (Customer $customer) {
+        Customer::all()->each(function (Customer $customer) {
             $link = route('customer.view', $customer->id, false);
             SearchItem::create([
                 'title' => $customer->name,
@@ -56,7 +56,7 @@ class CreateSearchItems extends Command
                 'item_id' => $customer->id,
             ]);
         });
-        Product::all()->map(function (Product $product) {
+        Product::all()->each(function (Product $product) {
             $link = route('product.view', $product->id, false);
             SearchItem::create([
                 'title' => $product->name,
@@ -67,7 +67,7 @@ class CreateSearchItems extends Command
                 'item_id' => $product->id,
             ]);
         });
-        Project::all()->map(function (Project $project) {
+        Project::all()->each(function (Project $project) {
             $link = route('project.view', $project->id, false);
             SearchItem::create([
                 'title' => $project->name,
@@ -78,7 +78,7 @@ class CreateSearchItems extends Command
                 'item_id' => $project->id,
             ]);
         });
-        User::all()->map(function (User $user) {
+        User::all()->each(function (User $user) {
             $link = route('user.view', $user->id, false);
             SearchItem::create([
                 'title' => $user->name,

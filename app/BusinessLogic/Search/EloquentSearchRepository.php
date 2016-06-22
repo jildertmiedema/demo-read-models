@@ -28,16 +28,7 @@ class EloquentSearchRepository implements SearchRepository
         return $builder
             ->limit(100)
             ->get()
-            ->map(function (SearchItem $item) {
-                $result = new SearchResult();
-                $result->title = $item->title;
-                $result->short = $item->short;
-                $result->type = $item->type;
-                $result->link = $item->link;
-                $result->relevance = 1;
-
-                return $result;
-            })
+            ->map(mapTo(SearchResult::class))
             ->toArray();
     }
 }

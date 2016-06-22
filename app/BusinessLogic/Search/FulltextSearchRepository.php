@@ -12,20 +12,12 @@ class FulltextSearchRepository implements SearchRepository
      */
     public function search(string $term) : array
     {
-        return collect(\DB::table('search_items')
-            ->select('*', \DB::raw('MATCH(text) AGAINST("'.$term.'" IN BOOLEAN MODE) as relevance'))
-            ->whereRaw('MATCH(text) AGAINST(? IN BOOLEAN MODE)', [$term])
-            ->get())
-            ->map(function ($item) {
-                $result = new SearchResult();
-                $result->title = $item->title;
-                $result->short = $item->short;
-                $result->type = $item->type;
-                $result->link = $item->link;
-                $result->relevance = $item->relevance;
-
-                return $result;
-            })
+        return collect(\DB::select('
+                SELECT *, MATCH(text) AGAINST(? IN BOOLEAN MODE) as relevance 
+                FROM search_items
+                WHERE MATCH(text) AGAINST(? IN BOOLEAN MODE)
+                ', [$term, $term]))
+            ->map(mapTo(SearchResult::class))
             ->toArray();
     }
 }
