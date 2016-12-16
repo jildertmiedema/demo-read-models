@@ -45,4 +45,11 @@ class DashboardController extends Controller
 
         return view('dashboard-read', compact('orders'));
     }
+
+    public function dashboardDb()
+    {
+        $orders = app('widgets.latest-orders.db')->latest(5);
+
+        return view('dashboard-read', compact('orders'));
+    }
 }

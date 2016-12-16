@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('dashboard', 'DashboardController@dashboard');
 Route::get('dashboard/read', 'DashboardController@dashboardRead');
 Route::get('dashboard/redis', 'DashboardController@dashboardRedis');
+Route::get('dashboard/db', 'DashboardController@dashboardDb');
 Route::get('search', 'SearchController@search');
 Route::get('search/fulltext', 'SearchController@searchFulltext');
 Route::get('sales', 'ListController@todoList');
