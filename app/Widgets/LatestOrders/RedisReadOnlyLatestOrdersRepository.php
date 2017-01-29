@@ -4,12 +4,8 @@ namespace App\Widgets\LatestOrders;
 
 use Predis\Client as PredisClient;
 
-class RedisLatestOrdersRepository implements LatestOrdersRepository
+class RedisReadOnlyLatestOrdersRepository implements LatestOrdersRepository
 {
-    /**
-     * @var LatestOrdersRepository
-     */
-    private $latestOrdersRepository;
     /**
      * @var PredisClient
      */
@@ -20,11 +16,9 @@ class RedisLatestOrdersRepository implements LatestOrdersRepository
     private $serializer;
 
     public function __construct(
-        LatestOrdersRepository $latestOrdersRepository,
         PredisClient $redis,
         Serializer $serializer
     ) {
-        $this->latestOrdersRepository = $latestOrdersRepository;
         $this->redis = $redis;
         $this->serializer = $serializer;
     }
@@ -38,14 +32,11 @@ class RedisLatestOrdersRepository implements LatestOrdersRepository
     {
         $key = 'latest-orders-' . $amount;
         $value = $this->redis->get($key);
-        if ($value) {
-            return $this->serializer->deserialize($value);
+        if (!$value) {
+            return [];
         }
-        $orders = $this->latestOrdersRepository->latest($amount);
-        $this->redis->set($key, $this->serializer->serialize($orders));
-        $this->redis->expire($key, 20);
 
-        return $orders;
+        return $this->serializer->deserialize($value);
     }
 
 }

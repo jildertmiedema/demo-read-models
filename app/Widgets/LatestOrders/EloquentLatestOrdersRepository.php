@@ -18,13 +18,8 @@ class EloquentLatestOrdersRepository implements LatestOrdersRepository
             ->with('lines')
             ->limit($amount)
             ->get()
-            ->map(function (OrderModel $orderModel) {
-                $order = new Order;
-                $order->customerName = $orderModel->customer_name;
-                $order->date = $orderModel->date->format('d-m-Y');
-                $order->total = $orderModel->total();
-
-                return $order;
+            ->map(function (OrderModel $e) {
+                return new Order($e->customer_name, $e->date->format('d-m-Y'), $e->total());
             })
             ->toArray();
     }

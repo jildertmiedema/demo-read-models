@@ -24,14 +24,16 @@ class DbLatestOrdersRepository implements LatestOrdersRepository
     public function latest(int $amount) : array
     {
         return collect($this->connection->select('
-                SELECT `customer_name`, `date`, sum(`order_lines`.`amount` * `order_lines`.`piece_price`) as total 
-                FROM `orders`
-                INNER JOIN `order_lines` ON `order_lines`.`order_id` = `orders`.`id`
-                GROUP BY `orders`.`id`
+                SELECT customer_name, date, sum(lines.amount * lines.piece_price) as total 
+                FROM orders
+                INNER JOIN order_lines lines ON lines.order_id = orders.id
+                GROUP BY orders.id
                 ORDER by date DESC 
                 LIMIT 0,5
             '))
-            ->map(mapTo(Order::class))
+            ->map(function ($row) {
+                return new Order($row->customer_name, $row->date, $row->total);
+            })
             ->toArray();
     }
 }

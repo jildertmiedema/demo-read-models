@@ -63,9 +63,9 @@
                         <tbody>
                             @foreach($orders as $order)
                                 <tr>
-                                    <td>{{ $order->customerName }}</td>
-                                    <td>{{ $order->date }}</td>
-                                    <td class="text-right">{{ money($order->total) }}</td>
+                                    <td>{{ $order->customerName() }}</td>
+                                    <td>{{ $order->date() }}</td>
+                                    <td class="text-right">{{ money($order->total()) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
