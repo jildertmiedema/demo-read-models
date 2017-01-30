@@ -1,8 +1,10 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Http\Controllers;
 
-use App\BusinessLogic\Search\SearchRepository;
+use App\Widgets\Search\Searching\FulltextSearchRepository;
+use App\Widgets\Search\Searching\SearchRepository;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -28,7 +30,7 @@ class SearchController extends Controller
     public function searchFulltext(Request $request)
     {
         $term = $request->input('q', '');
-        $results = app('search.full-text')->search($term);
+        $results = app(FulltextSearchRepository::class)->search($term);
 
         return view('search.results', compact('results', 'term'));
     }

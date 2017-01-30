@@ -1,10 +1,10 @@
 <?php
 
-namespace App\BusinessLogic\Search;
+namespace App\Widgets\Search\Indexing;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SearchItem extends Model
+class SearchItemModel extends Model
 {
     protected $table = 'search_items';
 

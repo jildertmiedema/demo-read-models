@@ -38,7 +38,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="/dashboard">Normal</a></li>
                         <li><a href="/dashboard/read">Read</a></li>
-                        <li><a href="/dashboard/redis">Redis</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

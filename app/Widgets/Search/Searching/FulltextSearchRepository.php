@@ -1,9 +1,21 @@
 <?php
+declare(strict_types = 1);
 
-namespace App\BusinessLogic\Search;
+namespace App\Widgets\Search\Searching;
+
+use Illuminate\Database\Connection;
 
 class FulltextSearchRepository implements SearchRepository
 {
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    public function __construct(Connection $connection)
+    {
+        $this->connection = $connection;
+    }
 
     /**
      * @param string $term
@@ -12,10 +24,10 @@ class FulltextSearchRepository implements SearchRepository
      */
     public function search(string $term) : array
     {
-        return collect(\DB::select('
+        return collect($this->connection->select('
                 SELECT *, MATCH(text) AGAINST(? IN BOOLEAN MODE) as relevance 
                 FROM search_items
-                WHERE MATCH(text) AGAINST(? IN BOOLEAN MODE)
+                WHERE MATCH (text) AGAINST(? IN BOOLEAN MODE)
                 ', [$term, $term]))
             ->map(mapTo(SearchResult::class))
             ->toArray();

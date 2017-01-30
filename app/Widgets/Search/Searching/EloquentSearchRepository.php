@@ -1,6 +1,8 @@
 <?php
 
-namespace App\BusinessLogic\Search;
+namespace App\Widgets\Search\Searching;
+
+use App\Widgets\Search\Indexing\SearchItemModel;
 
 class EloquentSearchRepository implements SearchRepository
 {
@@ -18,7 +20,7 @@ class EloquentSearchRepository implements SearchRepository
         if (count($terms) === 0 ) {
             return [];
         }
-        $builder = SearchItem::query();
+        $builder = SearchItemModel::query();
         foreach ($terms as $term) {
             $term = str_replace('%%', '%', $term);
             $term = sprintf('%%%s%%', $term);

@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
     {
         require_once __DIR__ . '/../helpers.php';
 
-        $this->app->bind('search.full-text', FulltextSearchRepository::class);
         $this->app->bind(TodoListRepository::class, function () {
             $repo = $this->app->make(BuilderTodoListRepository::class);
 

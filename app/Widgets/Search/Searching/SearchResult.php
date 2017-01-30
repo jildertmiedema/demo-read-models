@@ -1,6 +1,6 @@
 <?php
 
-namespace App\BusinessLogic\Search;
+namespace App\Widgets\Search\Searching;
 
 class SearchResult
 {
