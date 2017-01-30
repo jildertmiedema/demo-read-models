@@ -57,7 +57,7 @@ function mapTo($class)
 
         if ($data instanceof Model) {
             $data = $data->toArray();
-        } else {
+        } elseif (is_object($data)) {
             $data = get_object_vars($data);
         }
 
@@ -84,4 +84,11 @@ function mapPaginator(Paginator $paginator, \Closure $mapper)
         'path' => LengthAwarePaginator::resolveCurrentPath(),
         'pageName' => 'page',
     ]);
+}
+
+function iterator_each(Iterator $iterator, \Closure $callback)
+{
+    foreach ($iterator as $item) {
+        $callback($item);
+    }
 }

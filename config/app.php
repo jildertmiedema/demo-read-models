@@ -158,6 +158,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Widgets\LatestOrders\LatestOrderServiceProvider::class,
+        App\Widgets\Search\SearchServiceProvider::class,
 
     ],
 

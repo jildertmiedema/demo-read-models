@@ -7,10 +7,16 @@ use App\BusinessLogic\Customers\Customer;
 use App\BusinessLogic\Sales\Project;
 use App\BusinessLogic\Search\SearchItem;
 use App\User;
+use App\Widgets\Search\SearchIndexer;
 use Illuminate\Console\Command;
 
 class CreateSearchItems extends Command
 {
+    /**
+     * @var SearchIndexer
+     */
+    private $indexer;
+
     /**
      * The name and signature of the console command.
      *
@@ -40,54 +46,57 @@ class CreateSearchItems extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(SearchIndexer $indexer)
     {
-        SearchItem::all()->each(function ($item) {
-            $item->delete();
-        });
-        Customer::all()->each(function (Customer $customer) {
+        $this->indexer = $indexer;
+        $this->indexer->renew();
+        iterator_each(Customer::query()->cursor(), function (Customer $customer) {
             $link = route('customer.view', $customer->id, false);
-            SearchItem::create([
+            $short = (string)view('search.customer', compact('customer', 'link'));
+            $wordsToSearchIn = implode("\n", $customer->toArray());
+
+            $this->indexer->index(new SearchItem([
                 'title' => $customer->name,
-                'short' => (string) view('search.customer', compact('customer', 'link')),
-                'text' => implode("\n", $customer->toArray()),
+                'short' => $short,
+                'text' => $wordsToSearchIn,
                 'type' => 'customer',
                 'link' => $link,
                 'item_id' => $customer->id,
-            ]);
+            ]));
         });
-        Product::all()->each(function (Product $product) {
+        iterator_each(Product::query()->cursor(), function (Product $product) {
             $link = route('product.view', $product->id, false);
-            SearchItem::create([
+            $this->indexer->index(new SearchItem([
                 'title' => $product->name,
                 'short' => (string) view('search.product', compact('product', 'link')),
                 'text' => implode("\n", $product->toArray()),
                 'type' => 'product',
                 'link' => $link,
                 'item_id' => $product->id,
-            ]);
+            ]));
         });
-        Project::all()->each(function (Project $project) {
+        iterator_each(Project::query()->cursor(), function (Project $project) {
             $link = route('project.view', $project->id, false);
-            SearchItem::create([
+            $this->indexer->index(new SearchItem([
                 'title' => $project->name,
                 'short' => (string) view('search.project', compact('project', 'link')),
                 'text' => $project->name . "\n" . $project->user->name,
                 'type' => 'project',
                 'link' => $link,
                 'item_id' => $project->id,
-            ]);
+            ]));
         });
-        User::all()->each(function (User $user) {
+        iterator_each(User::query()->cursor(), function (User $user) {
             $link = route('user.view', $user->id, false);
-            SearchItem::create([
+            $this->indexer->index(new SearchItem([
                 'title' => $user->name,
                 'short' => (string) view('search.user', compact('user', 'link')),
                 'text' => $user->name,
                 'type' => 'user',
                 'link' => $link,
                 'item_id' => $user->id,
-            ]);
+            ]));
         });
+        $this->line("real: ".(memory_get_peak_usage(true)/1024/1024)." MiB");
     }
 }

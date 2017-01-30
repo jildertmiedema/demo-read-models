@@ -8,7 +8,8 @@
         "php": ">=5.5.9",
         "laravel/framework": "5.3.*",
         "predis/predis": "^1.1",
-        "nikic/php-parser": "~2.0"
+        "nikic/php-parser": "~2.0",
+        "elasticsearch/elasticsearch": "^5.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
