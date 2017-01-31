@@ -18,6 +18,7 @@
                         <th>Date</th>
                         <th>Time</th>
                         <th>State</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +36,11 @@
                             <td>{{ $result->appointmentDate }}</td>
                             <td>{{ $result->appointmentTime }}</td>
                             <td>{{ $result->state }}</td>
+                            <td>
+                                <a href="{{ route('activity.show', ['id' => $result->activityId]) }}">
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

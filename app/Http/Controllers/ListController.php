@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\BusinessLogic\Sales\Activity;
-use App\Widgets\SalesTodoList\TodoItem;
 use App\Widgets\SalesTodoList\TodoListRepository;
 use Carbon\Carbon;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 
 class ListController extends Controller
 {
@@ -14,6 +13,9 @@ class ListController extends Controller
 
     public function todoList()
     {
+        if (Auth::guest()) {
+            abort(401, 'login first');
+        }
         $data = Activity::query();
         $data->with('account');
         $data->with('project');

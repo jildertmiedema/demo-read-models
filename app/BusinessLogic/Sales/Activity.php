@@ -30,4 +30,12 @@ class Activity extends Model
             ->orderBy('date')
             ->orderBy('time');
     }
+
+    public function openAppointments()
+    {
+        return $this->hasMany(Appointment::class, 'activity_id')
+            ->where('done', 0)
+            ->orderBy('date')
+            ->orderBy('time');
+    }
 }

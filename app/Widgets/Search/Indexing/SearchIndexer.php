@@ -7,5 +7,5 @@ interface SearchIndexer
 {
     public function index(SearchItem $item): void;
 
-    public function renew();
+    public function clear();
 }

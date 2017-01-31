@@ -38,7 +38,7 @@ final class ElasticSearchSearchRepository implements SearchRepository
         ]);
 
         return collect(array_get($results, 'hits.hits'))
-            ->map(function ($data) {
+            ->map(function (array $data) {
                 return $data['_source'] + ['relevance' => $data['_score']];
             })
             ->map(mapTo(SearchResult::class))

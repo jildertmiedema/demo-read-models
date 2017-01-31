@@ -15,7 +15,7 @@ final class EloquentSearchIndexer implements SearchIndexer
         SearchItemModel::create($data);
     }
 
-    public function renew()
+    public function clear()
     {
         iterator_each(SearchItemModel::query()->cursor(), function (SearchItemModel $item) {
             $item->delete();

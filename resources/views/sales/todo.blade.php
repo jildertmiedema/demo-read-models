@@ -18,6 +18,7 @@
                         <th>Date</th>
                         <th>Time</th>
                         <th>State</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,7 +26,7 @@
                         <tr class="{{ row_class($result) }}">
                             <td>{!! time_class($result) !!}</td>
                             <td>
-                                <a href="{{route('account.view', $result->account->id}}">
+                                <a href="{{route('account.view', $result->account->id)}}">
                                     {{ $result->account->name }}
                                 </a>
                             </td>

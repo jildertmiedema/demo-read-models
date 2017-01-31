@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Widgets\SalesTodoList\TodoListSubscriber;
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -17,18 +18,12 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\EventListener',
         ],
     ];
-
     /**
-     * Register any other events for your application.
+     * The subscriber classes to register.
      *
-     * @param \Illuminate\Contracts\Events\Dispatcher $events
-     *
-     * @return void
+     * @var array
      */
-    public function boot()
-    {
-        parent::boot();
-
-        //
-    }
+    protected $subscribe = [
+        TodoListSubscriber::class,
+    ];
 }

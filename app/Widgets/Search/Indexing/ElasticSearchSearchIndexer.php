@@ -30,7 +30,7 @@ final class ElasticSearchSearchIndexer implements SearchIndexer
         ]);
     }
 
-    public function renew()
+    public function clear()
     {
         try {
             $this->client->indices()->delete([

@@ -19,6 +19,12 @@
                 <abbr>{{$result->relevance}}</abbr>
             </article>
         @endforeach
+
+        @foreach($results as $result)
+            <ul>
+                <li><a href="{{$result->link}}">{{ $result->title }}</a></li>
+            </ul>
+        @endforeach
     </div>
 
 </div><!-- /.container -->

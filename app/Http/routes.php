@@ -51,3 +51,17 @@ Route::get('user/{id}', [
     'as' => 'user.view',
     'uses' => 'HomeController@demo',
 ]);
+Route::get('account/{id}', [
+    'as' => 'account.view',
+    'uses' => 'AccountController@show',
+]);
+
+Route::get('activity/{id}', [
+    'as' => 'activity.show',
+    'uses' => 'ActivityController@show',
+]);
+
+Route::post('appointment/{id}/complete', [
+    'as' => 'appointment.complete',
+    'uses' => 'ActivityController@complete',
+]);

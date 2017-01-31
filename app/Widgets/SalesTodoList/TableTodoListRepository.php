@@ -2,11 +2,19 @@
 
 namespace App\Widgets\SalesTodoList;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
+use Illuminate\Database\Connection;
 
-class InMemoryTodoListRepository implements TodoListRepository
+class TableTodoListRepository implements TodoListRepository
 {
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    public function __construct(Connection $connection)
+    {
+        $this->connection = $connection;
+    }
 
     /**
      * @param int $userId
@@ -16,7 +24,7 @@ class InMemoryTodoListRepository implements TodoListRepository
      */
     public function getPaginatedForUser(int $userId, int $itemsPerPage) : \Illuminate\Contracts\Pagination\Paginator
     {
-        $paginatedItems = \DB::table('todo_list_memory')
+        $paginatedItems = $this->connection->table('todo_list_memory')
             ->where('user_id', $userId)
             ->paginate($itemsPerPage);
 

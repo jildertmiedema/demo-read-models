@@ -48,7 +48,7 @@ class CreateSearchItems extends Command
     public function handle(SearchIndexer $indexer)
     {
         $this->indexer = $indexer;
-        $this->indexer->renew();
+        $this->indexer->clear();
 
         app(CustomerIndexer::class)->run();
         app(ProductIndexer::class)->run();

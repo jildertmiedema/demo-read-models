@@ -34,4 +34,16 @@ class Appointment extends Model
 
         return $diff;
     }
+
+    public function complete()
+    {
+        if ($this->done) {
+            return;
+        }
+
+        $this->done = true;
+        $this->save();
+
+        event(new AppointmentWasCompleted($this->id, date('Y-m-d H:i:s')));
+    }
 }

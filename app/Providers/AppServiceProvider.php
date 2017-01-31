@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\BusinessLogic\Search\FulltextSearchRepository;
 use App\Widgets\SalesTodoList\BuilderTodoListRepository;
-use App\Widgets\SalesTodoList\InMemoryTodoListRepository;
+use App\Widgets\SalesTodoList\TableTodoListRepository;
 use App\Widgets\SalesTodoList\TimeClassDecorator;
 use App\Widgets\SalesTodoList\TodoListRepository;
 use App\Widgets\SalesTodoList\ViewTodoListRepository;
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('widget-todo.repo.in-memory', function () {
-            $repo = $this->app->make(InMemoryTodoListRepository::class);
+            $repo = $this->app->make(TableTodoListRepository::class);
 
             return new TimeClassDecorator($repo);
         });
