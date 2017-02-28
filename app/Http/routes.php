@@ -65,3 +65,9 @@ Route::post('appointment/{id}/complete', [
     'as' => 'appointment.complete',
     'uses' => 'ActivityController@complete',
 ]);
+
+
+Route::get('filter', [
+    'as' => 'filter',
+    'uses' => 'FilterController@index',
+]);

@@ -159,6 +159,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Widgets\LatestOrders\LatestOrderServiceProvider::class,
         App\Widgets\Search\SearchServiceProvider::class,
+        App\Widgets\AppointmentFilter\AppointmentFilterServiceProvider::class,
 
     ],
 

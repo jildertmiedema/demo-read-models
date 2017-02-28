@@ -21,6 +21,7 @@ class CreateTodoListView extends Migration
               `account`.`phone` as account_phone,
               `project`.`name` as project_name,
               `project`.`user_id` as user_id,
+              `user`.`name` as user_name,
               `state`.`name` as state,
               `appointment`.`date` as appointment_date,
               `appointment`.`time` as appointment_time
@@ -30,6 +31,7 @@ class CreateTodoListView extends Migration
               inner join `sales_states` as `state` on `state`.`id` = `sales_activities`.`status_id`
               inner join `sales_accounts` as `account` on `account`.`id` = `sales_activities`.`account_id`
               inner join `sales_appointments` as `appointment` on `appointment`.`activity_id` = `sales_activities`.`id`
+              inner join `users` as `user` on `project`.`user_id` = `user`.`id`
             where `appointment`.`done` = 0
               and `sales_activities`.`completed` = 0
             order by
